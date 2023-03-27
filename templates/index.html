@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Gem-Code Editor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='index.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./admin.html">Profile</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active navbar-brand" aria-current="page" href="#">Question</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active navbar-brand" href="#">Editor</a>
+                    </li>
+                </ul>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="d-flex align-items-start">
+          
+          <img src="{{ url_for('static', filename='Gemini_Logo.png') }}" alt="Logo"
+                class="float-right mr-0 mt-0" style="width: 250px; height: 28px;">
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-light  border border-dark">
+        <div class="row ">
+            
+          <div class="col-8 ">
+            <!-- larger div content here -->
+            <select id="dropdown" class="language">
+                <option value="">Select Languages</option>
+                <option value="71">Python</option>
+                <option value="50">C</option>
+                <option value="62">Java</option>
+                
+             </select>
+             <select id="dropdown1" class="language">
+                <option value="">Result</option>
+                </select>
+              
+                  <button type="button" class="btn " id="Runbtn" style="background-color: #38A3A5; color:white; margin-left:10vw;">Run</button>
+                
+               
+                <button type="button" class="btn" id="Executebtn" style="background-color: #38A3A5; color:white;">Submit</button>
+              
+            <div class="border rounded mt-3 mb-3 ">
+                <div class="form-floating  ">
+                  <form method="POST" action="/submit">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="code_input"  name="code_input" style="height: 75vh;" onkeydown="if(event.keyCode===9){
+                      var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;
+                  }"></textarea>
+                  </form>
+                    <label for="floatingTextarea2"></label>
+                  </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row ">
+                <div class="mt-5">input</div>
+              <div class="col-12 mt-2">
+                <!-- smaller div content here -->
+                
+                    <div class="form-floating">
+                      
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="input_area" style="height: 25vh"></textarea>
+                        <label for="floatingTextarea2"></label>
+                      </div>
+                 
+              </div>
+              <div class="mt-5">
+                <input type="checkbox" id="checkbox" />
+                <label for="checkbox" style="color:black;margin-left:2vw;">Test against custom input.
+                </label>
+              </div>
+              <div class="pt-5">output</div>
+              <div class="col-12 mt-2" >
+                <!-- smaller div content here -->
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="result" name="code_output" style="height: 25vh"></textarea>
+                    <label for="floatingTextarea2"></label>
+                  </div>
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!--<script>
+  
+  var hashMap = { "Python": "Python (3.8.1)", "Java": "Java (OpenJDK 13.0.1)", "C": "C (GCC 9.2.0)" };
+  var globalId = null;
+  var dropdown = document.getElementById("dropdown");
+  var select1 = document.getElementById("dropdown1");
+  async function getValueFromServer(selectedValue) {
+
+let xmlHttpReq = new XMLHttpRequest();
+xmlHttpReq.open("GET", 'https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/language', false);
+xmlHttpReq.send(null);
+
+let obj = JSON.parse(xmlHttpReq.responseText);
+const value1 = obj[0][selectedValue];
+console.log(value1);
+const myTextarea = document.getElementById("code_input");
+myTextarea.value = value1;
+//result.innerHTML = value1;
+}
+  dropdown.addEventListener("change", function() {
+    const selectedValue = dropdown.value;
+  const options = dropdown.options;
+  let selectedOptionText = '';
+
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].value === selectedValue) {
+      selectedOptionText = options[i].textContent;
+      break;
+    }
+  }
+  const Selected_value= `${selectedValue}`
+  const Selected_option= `${selectedOptionText}`  
+  console.log(`Selected value: ${selectedValue}`);
+  console.log(`Selected option: ${selectedOptionText}`);
+    
+  fetch('/select_lang', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    Selected_value: Selected_value,
+    Selected_option: Selected_option
+  })
+})
+.then(response => response.json())
+.then(data => {
+  
+  // handle the response data here
+  data.forEach(item => {
+     // console.log(item.name.toString());
+     if(item.name.toString() == hashMap[Selected_option].toString())
+      {
+      globalId=item.id;
+      getValueFromServer(item.id.toString());
+     
+   } 
+    
+  })
+  console.log(data);
+  console.log(selectedValue);
+});
+  });
+
+ 
+//run the textarea code
+var submitBtn = document.getElementById('Runbtn');
+    submitBtn.addEventListener('click', function() {
+        var textareaValue = document.querySelector('textarea[name="code_input"]').value;
+        
+       
+      fetch('/run', {
+            method: 'POST',
+            body: JSON.stringify({
+               textareaValue: textareaValue,
+               Selected_value: globalId,
+              }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.text())
+  .then(data => {
+    console.log(data);
+    const myTextarea = document.getElementById("result")
+    myTextarea.innerHTML = data;
+    console.log(data); // prints the returned JSON object
+  })
+  .catch(error => {
+    console.error(error);
+  });
+    });
+
+
+//submit the code
+var submitBtn = document.getElementById('Executebtn');
+    submitBtn.addEventListener('click', function() {
+        var textareaValue = document.querySelector('textarea[name="code_input"]').value;
+        
+       
+      fetch('/submit', {
+            method: 'POST',
+            body: JSON.stringify({
+               textareaValue: textareaValue,
+               Selected_value: globalId,
+              }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.text())
+  .then(data => {
+    console.log(data);
+    const myTextarea = document.getElementById("result")
+    myTextarea.innerHTML = data;
+    dynamicdropdown()
+    console.log(data); // prints the returned JSON object
+  })
+  .catch(error => {
+    console.error(error);
+  });
+    });
+
+    function dynamicdropdown() {
+ 
+ fetch('https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/language')
+ .then(response => response.json())
+ .then(data => {
+   data.forEach(item => {
+     for (let key of Object.keys(item)) {
+       console.log(key);
+       if(key==="submissions")
+       {
+        
+       let str = `${item[key]}`;
+        
+         let k = str.split(",");
+         console.log(k);
+         subarray=[];
+         for(let i=0;i<k.length;i++)
+         {
+           subarray.push(k[i]);
+         }
+         select1.innerHTML="";
+         let newOption = document.createElement("option");
+         newOption.value = "Result";
+         newOption.textContent = "Result";
+         select1.appendChild(newOption);
+         for(let i=0;i<subarray.length;i++)
+         {
+           var option = document.createElement("option");
+         option.text =  "submission"+i+"  "+subarray[i];
+         option.value = "submission"+i+"  "+subarray[i];
+         select1.add(option);
+         }
+         
+       }
+     
+      
+     }
+     
+    
+   });
+
+   
+  
+ })
+ .catch(error => {
+   console.error(error);
+ });
+
+}
+
+
+</script>-->
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+
+</html>

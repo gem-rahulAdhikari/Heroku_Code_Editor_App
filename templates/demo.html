@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Detail Submission Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha256.js"></script>
+</head>
+
+<body>
+    <form name="detailForm" onsubmit="return validateForm()" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Submissions</label>
+        <input type="text" id="submission" name="submission"><br><br>
+    
+
+        <button type="button" id="myButton" onclick="getSubmission()">Submit</button>
+    </form>
+
+    <button type="button" onclick="getSubmission()">Submit</button>
+</body>
+<!--<script>
+     const firstInput=document.getElementById("name");
+     const secondInput=document.getElementById("email");
+     const thirdInput=document.getElementById("submission");
+     const name=firstInput.value;
+     const email=secondInput.value;
+     const submission=thirdInput.value;
+     console.log(name);
+     console.log(email);
+     console.log(submission);
+    function setDetails(){
+     // Replace with your function name
+    
+     
+     
+const apiUrl = `https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/submissions`; // Replace with your app ID and function name
+
+const data = {
+  // Replace with your body parameter
+  "name": name,
+  "email": email,
+  "submission":[submission]
+};
+
+const options = {
+  method: 'POST',
+  body: JSON.stringify(data),
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
+fetch(apiUrl, options)
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}
+
+function getSubmission()
+{
+   
+  let c=0;
+  fetch('https://us-east-1.aws.data.mongodb-api.com/app/application-0-awqqz/endpoint/getSubmission')
+  .then(response => response.json())
+  .then(data => {
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
+     
+      if (item.name === 'rahul' && item.email === 'rahul@gmail.com') { // replace 'matched value' with the value you want to match
+          c=1;
+          console.log(item.submission);
+          console.log("Array values:");
+        for (let j = 0; j < item.submission.length; j++) {
+          console.log(item.submission[j]); // replace 'arrayKey' with the name of the array key
+        }
+      }
+      
+    }
+    
+    
+  }
+  
+  )
+  .catch(error => console.error(error));
+
+    if(c===0)
+    {
+        setDetails();
+    }
+  
+
+
+}
+
+</script>-->
+<script src="{{ url_for('static', filename='demo.js') }}"></script>
+
+</html>

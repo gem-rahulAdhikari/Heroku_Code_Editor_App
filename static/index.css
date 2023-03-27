@@ -1,0 +1,48 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+}
+#dropdown{
+    
+    width:  130px;
+  height: 30px;
+ margin-top:2rem;
+  font-size:12px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  }
+  #dropdown1{
+   
+    width:  130px;
+  height: 30px;
+  margin-left:2vw;
+  font-size:12px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  }
+
+  .btn {
+    display: inline-block;
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  @media (max-width: 1088px) {
+    .btn {
+      font-size: 10px; /* Reduce font size */
+      padding: 8px 16px; /* Reduce padding */
+      margin-right: 0; /* Remove right margin */
+      margin-bottom: 5px; /* Reduce bottom margin */
+      display: block; /* Make buttons stack vertically */
+      width: 100%; /* Make buttons take up full width */
+    }
+  }
